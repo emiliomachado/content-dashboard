@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Instagram,
+  Camera,
+  Briefcase,
   BarChart2,
   CalendarDays,
   Users,
@@ -21,9 +22,14 @@ const navItems = [
     icon: LayoutDashboard,
   },
   {
+    label: "LinkedIn Manager",
+    href: "/linkedin",
+    icon: Briefcase,
+  },
+  {
     label: "Instagram Manager",
     href: "/instagram",
-    icon: Instagram,
+    icon: Camera,
   },
   {
     label: "Analytics",
