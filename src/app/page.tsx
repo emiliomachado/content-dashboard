@@ -6,35 +6,35 @@ import Link from "next/link";
 const sections = [
   {
     title: "Instagram Manager",
-    description: "Manage posts, stories, and engagement across your Instagram accounts.",
+    description: "Manage EmmiTec.Health and PETJourney posts, stories, and engagement across both brand accounts.",
     href: "/instagram",
     icon: Instagram,
     status: "Active",
   },
   {
     title: "Analytics",
-    description: "Track performance metrics, reach, and audience growth over time.",
+    description: "Track LinkedIn follower growth, post reach, and engagement across EmmiTec.Health and PETJourney.",
     href: "/analytics",
     icon: BarChart2,
     status: "Active",
   },
   {
     title: "Content Calendar",
-    description: "Plan and schedule content across all channels in one place.",
+    description: "Plan EN/PT content across Digital Health, RPM, Interoperability, and Pet Health themes.",
     href: "/calendar",
     icon: CalendarDays,
     status: "Active",
   },
   {
     title: "Competitor Tracker",
-    description: "Monitor competitor activity, posting frequency, and engagement.",
+    description: "Monitor health tech and pet health competitors — posting cadence, follower growth, and engagement.",
     href: "/competitors",
     icon: Users,
     status: "Active",
   },
   {
     title: "News Consolidator",
-    description: "Aggregate industry news and trending topics relevant to your niche.",
+    description: "Aggregate news on Digital Health, RPM, SUS, Interoperability, and Pet Health from key sources.",
     href: "/news",
     icon: Newspaper,
     status: "Active",
@@ -45,9 +45,9 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight">Dashboard</h2>
+        <h2 className="text-2xl font-bold tracking-tight">Welcome back, Emilio</h2>
         <p className="text-muted-foreground mt-1">
-          Welcome to your content management hub.
+          EmmiTec.Health · PETJourney — Content Management Hub
         </p>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
