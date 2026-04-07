@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Linkedin, Users, Eye, TrendingUp, Repeat2, ThumbsUp, MessageSquare, FileText } from "lucide-react";
+import { Briefcase, Users, Eye, TrendingUp, Repeat2, ThumbsUp, MessageSquare, FileText } from "lucide-react";
 
 const stats = [
   { label: "Followers", value: "13,453", icon: Users },
@@ -60,7 +60,7 @@ export default function LinkedInPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
-        <Linkedin className="h-6 w-6 text-blue-500" />
+        <Briefcase className="h-6 w-6 text-blue-500" />
         <div>
           <h2 className="text-2xl font-bold tracking-tight">LinkedIn Manager</h2>
           <p className="text-muted-foreground text-sm mt-0.5">

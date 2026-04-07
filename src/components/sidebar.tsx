@@ -9,7 +9,7 @@ import {
   Users,
   Newspaper,
   LayoutDashboard,
-  Linkedin,
+  Briefcase,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
@@ -24,7 +24,7 @@ const navItems = [
   {
     label: "LinkedIn Manager",
     href: "/linkedin",
-    icon: Linkedin,
+    icon: Briefcase,
   },
   {
     label: "Instagram Manager",

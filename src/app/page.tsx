@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Camera, Linkedin, BarChart2, CalendarDays, Users, Newspaper } from "lucide-react";
+import { Camera, Briefcase, BarChart2, CalendarDays, Users, Newspaper } from "lucide-react";
 import Link from "next/link";
 
 const sections = [
@@ -8,7 +8,7 @@ const sections = [
     title: "LinkedIn Manager",
     description: "Draft and schedule posts, track impressions, and manage your personal brand on LinkedIn.",
     href: "/linkedin",
-    icon: Linkedin,
+    icon: Briefcase,
     status: "Active",
   },
   {
