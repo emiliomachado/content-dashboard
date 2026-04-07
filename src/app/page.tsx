@@ -1,9 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Camera, BarChart2, CalendarDays, Users, Newspaper } from "lucide-react";
+import { Camera, Linkedin, BarChart2, CalendarDays, Users, Newspaper } from "lucide-react";
 import Link from "next/link";
 
 const sections = [
+  {
+    title: "LinkedIn Manager",
+    description: "Draft and schedule posts, track impressions, and manage your personal brand on LinkedIn.",
+    href: "/linkedin",
+    icon: Linkedin,
+    status: "Active",
+  },
   {
     title: "Instagram Manager",
     description: "Manage EmmiTec.Health and PETJourney posts, stories, and engagement across both brand accounts.",

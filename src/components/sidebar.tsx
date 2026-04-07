@@ -9,6 +9,7 @@ import {
   Users,
   Newspaper,
   LayoutDashboard,
+  Linkedin,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
@@ -19,6 +20,11 @@ const navItems = [
     label: "Dashboard",
     href: "/",
     icon: LayoutDashboard,
+  },
+  {
+    label: "LinkedIn Manager",
+    href: "/linkedin",
+    icon: Linkedin,
   },
   {
     label: "Instagram Manager",
