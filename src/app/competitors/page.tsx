@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState, useMemo, useRef } from "react";
+import React, { useState, useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import {
   Plus, TrendingUp, TrendingDown, Minus,
   ChevronUp, ChevronDown, ChevronsUpDown,
@@ -193,51 +192,55 @@ function CompetitorDetail({ competitor }: { competitor: Competitor }) {
   );
 }
 
-// ── Add Company Dialog ────────────────────────────────────────────────────────
+// ── Add Company Panel ─────────────────────────────────────────────────────────
 
-function AddCompanyDialog({ onAdd, usedColors }: { onAdd: (c: MyCompany) => void; usedColors: string[] }) {
+function AddCompanyPanel({ onAdd, usedColors }: { onAdd: (c: MyCompany) => void; usedColors: string[] }) {
+  const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
-  const actionsRef = useRef<{ unmount: () => void; close: () => void } | null>(null);
   const nextColor = COMPANY_COLORS.find(c => !usedColors.includes(c)) ?? COMPANY_COLORS[0];
 
   function handleSubmit() {
     if (!name.trim()) return;
     onAdd({ id: Date.now().toString(), name: name.trim(), color: nextColor, competitors: [] });
     setName("");
-    actionsRef.current?.close();
+    setOpen(false);
   }
 
   return (
-    <Dialog actionsRef={actionsRef}>
-      <DialogTrigger className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-gray-600 text-gray-500 hover:text-gray-300 hover:border-gray-500 text-xs transition-colors">
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen(v => !v)}
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-gray-600 text-gray-500 hover:text-gray-300 hover:border-gray-500 text-xs transition-colors"
+      >
         <Plus className="h-3.5 w-3.5" />Add company
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-sm bg-gray-900 border-gray-700 text-gray-100">
-        <DialogHeader><DialogTitle className="text-gray-100">Add Company</DialogTitle></DialogHeader>
-        <div className="space-y-4 pt-2">
+      </button>
+      {open && (
+        <div className="absolute left-0 top-full mt-2 z-10 w-64 rounded-xl border border-gray-700 bg-gray-900 p-4 shadow-2xl space-y-3">
+          <p className="text-sm font-medium text-gray-100">Add Company</p>
           <div className="space-y-1.5">
             <Label className="text-xs text-gray-400">Company Name</Label>
-            <Input placeholder="e.g. My New Brand" className="bg-gray-800 border-gray-700 text-gray-100 placeholder:text-gray-500 h-9 text-sm" value={name} onChange={e => setName(e.target.value)} />
+            <Input autoFocus placeholder="e.g. My New Brand" className="bg-gray-800 border-gray-700 text-gray-100 placeholder:text-gray-500 h-9 text-sm" value={name} onChange={e => setName(e.target.value)} onKeyDown={e => e.key === "Enter" && handleSubmit()} />
           </div>
           <div className="flex justify-end gap-2">
-            <DialogClose render={<Button variant="outline" size="sm" className="border-gray-700 text-gray-300 hover:bg-gray-800" />}>Cancel</DialogClose>
+            <Button variant="outline" size="sm" className="border-gray-700 text-gray-300 hover:bg-gray-800" onClick={() => setOpen(false)}>Cancel</Button>
             <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white border-0" onClick={handleSubmit} disabled={!name.trim()}>Add</Button>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      )}
+    </div>
   );
 }
 
-// ── Add Competitor Dialog ─────────────────────────────────────────────────────
+// ── Add Competitor Panel ──────────────────────────────────────────────────────
 
-function AddCompetitorDialog({ onAdd }: { onAdd: (c: Competitor) => void }) {
+function AddCompetitorPanel({ onAdd }: { onAdd: (c: Competitor) => void }) {
+  const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [category, setCategory] = useState<Category>("Health Tech");
   const [website, setWebsite] = useState("");
   const [platform, setPlatform] = useState<Platform>("LinkedIn");
   const [handle, setHandle] = useState("");
-  const actionsRef = useRef<{ unmount: () => void; close: () => void } | null>(null);
 
   function handleSubmit() {
     if (!name.trim() || !handle.trim()) return;
@@ -246,20 +249,24 @@ function AddCompetitorDialog({ onAdd }: { onAdd: (c: Competitor) => void }) {
       accounts: [{ platform, handle: handle.startsWith("@") ? handle.trim() : `@${handle.trim()}`, followers: 0, growthPct: 0, engagementRate: 0, postsPerWeek: 0, lastPost: "—", recentPosts: [] }],
     });
     setName(""); setCategory("Health Tech"); setWebsite(""); setPlatform("LinkedIn"); setHandle("");
-    actionsRef.current?.close();
+    setOpen(false);
   }
 
   return (
-    <Dialog actionsRef={actionsRef}>
-      <DialogTrigger className="inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white transition-colors">
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen(v => !v)}
+        className="inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+      >
         <Plus className="h-4 w-4" />Add Competitor
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-md bg-gray-900 border-gray-700 text-gray-100">
-        <DialogHeader><DialogTitle className="text-gray-100">Add Competitor</DialogTitle></DialogHeader>
-        <div className="space-y-4 pt-2">
+      </button>
+      {open && (
+        <div className="absolute right-0 top-full mt-2 z-10 w-80 rounded-xl border border-gray-700 bg-gray-900 p-4 shadow-2xl space-y-3">
+          <p className="text-sm font-medium text-gray-100">Add Competitor</p>
           <div className="space-y-1.5">
             <Label className="text-xs text-gray-400">Company Name</Label>
-            <Input placeholder="e.g. Caregility" className="bg-gray-800 border-gray-700 text-gray-100 placeholder:text-gray-500 h-9 text-sm" value={name} onChange={e => setName(e.target.value)} />
+            <Input autoFocus placeholder="e.g. Caregility" className="bg-gray-800 border-gray-700 text-gray-100 placeholder:text-gray-500 h-9 text-sm" value={name} onChange={e => setName(e.target.value)} />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
@@ -291,13 +298,13 @@ function AddCompetitorDialog({ onAdd }: { onAdd: (c: Competitor) => void }) {
               <Input placeholder="@handle" className="bg-gray-800 border-gray-700 text-gray-100 placeholder:text-gray-500 h-9 text-sm" value={handle} onChange={e => setHandle(e.target.value)} />
             </div>
           </div>
-          <div className="flex justify-end gap-2 pt-1">
-            <DialogClose render={<Button variant="outline" size="sm" className="border-gray-700 text-gray-300 hover:bg-gray-800" />}>Cancel</DialogClose>
+          <div className="flex justify-end gap-2">
+            <Button variant="outline" size="sm" className="border-gray-700 text-gray-300 hover:bg-gray-800" onClick={() => setOpen(false)}>Cancel</Button>
             <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white border-0" onClick={handleSubmit} disabled={!name.trim() || !handle.trim()}>Add</Button>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      )}
+    </div>
   );
 }
 
@@ -408,7 +415,7 @@ export default function CompetitorsPage() {
             )}
           </div>
         ))}
-        <AddCompanyDialog onAdd={handleAddCompany} usedColors={companies.map(c => c.color)} />
+        <AddCompanyPanel onAdd={handleAddCompany} usedColors={companies.map(c => c.color)} />
       </div>
 
       {/* Active company header + actions */}
@@ -429,7 +436,7 @@ export default function CompetitorsPage() {
               {ALL_PLATFORMS.map(p => <SelectItem key={p} value={p}>{p}</SelectItem>)}
             </SelectContent>
           </Select>
-          <AddCompetitorDialog onAdd={handleAddCompetitor} />
+          <AddCompetitorPanel onAdd={handleAddCompetitor} />
         </div>
       </div>
 
