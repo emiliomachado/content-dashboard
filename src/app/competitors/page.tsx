@@ -209,10 +209,8 @@ function AddCompanyDialog({ onAdd, usedColors }: { onAdd: (c: MyCompany) => void
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-gray-600 text-gray-500 hover:text-gray-300 hover:border-gray-500 text-xs transition-colors">
-          <Plus className="h-3.5 w-3.5" />Add company
-        </button>
+      <DialogTrigger className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-gray-600 text-gray-500 hover:text-gray-300 hover:border-gray-500 text-xs transition-colors">
+        <Plus className="h-3.5 w-3.5" />Add company
       </DialogTrigger>
       <DialogContent className="sm:max-w-sm bg-gray-900 border-gray-700 text-gray-100">
         <DialogHeader><DialogTitle className="text-gray-100">Add Company</DialogTitle></DialogHeader>
@@ -253,10 +251,8 @@ function AddCompetitorDialog({ onAdd }: { onAdd: (c: Competitor) => void }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button size="sm" className="gap-2 bg-blue-600 hover:bg-blue-700 text-white border-0">
-          <Plus className="h-4 w-4" />Add Competitor
-        </Button>
+      <DialogTrigger className="inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white transition-colors">
+        <Plus className="h-4 w-4" />Add Competitor
       </DialogTrigger>
       <DialogContent className="sm:max-w-md bg-gray-900 border-gray-700 text-gray-100">
         <DialogHeader><DialogTitle className="text-gray-100">Add Competitor</DialogTitle></DialogHeader>
