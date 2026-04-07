@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import {
   Plus, TrendingUp, TrendingDown, Minus,
   ChevronUp, ChevronDown, ChevronsUpDown,
@@ -196,19 +196,19 @@ function CompetitorDetail({ competitor }: { competitor: Competitor }) {
 // ── Add Company Dialog ────────────────────────────────────────────────────────
 
 function AddCompanyDialog({ onAdd, usedColors }: { onAdd: (c: MyCompany) => void; usedColors: string[] }) {
-  const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
+  const actionsRef = useRef<{ unmount: () => void; close: () => void } | null>(null);
   const nextColor = COMPANY_COLORS.find(c => !usedColors.includes(c)) ?? COMPANY_COLORS[0];
 
   function handleSubmit() {
     if (!name.trim()) return;
     onAdd({ id: Date.now().toString(), name: name.trim(), color: nextColor, competitors: [] });
     setName("");
-    setOpen(false);
+    actionsRef.current?.close();
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog actionsRef={actionsRef}>
       <DialogTrigger className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-gray-600 text-gray-500 hover:text-gray-300 hover:border-gray-500 text-xs transition-colors">
         <Plus className="h-3.5 w-3.5" />Add company
       </DialogTrigger>
@@ -220,7 +220,7 @@ function AddCompanyDialog({ onAdd, usedColors }: { onAdd: (c: MyCompany) => void
             <Input placeholder="e.g. My New Brand" className="bg-gray-800 border-gray-700 text-gray-100 placeholder:text-gray-500 h-9 text-sm" value={name} onChange={e => setName(e.target.value)} />
           </div>
           <div className="flex justify-end gap-2">
-            <Button variant="outline" size="sm" className="border-gray-700 text-gray-300 hover:bg-gray-800" onClick={() => setOpen(false)}>Cancel</Button>
+            <DialogClose render={<Button variant="outline" size="sm" className="border-gray-700 text-gray-300 hover:bg-gray-800" />}>Cancel</DialogClose>
             <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white border-0" onClick={handleSubmit} disabled={!name.trim()}>Add</Button>
           </div>
         </div>
@@ -232,12 +232,12 @@ function AddCompanyDialog({ onAdd, usedColors }: { onAdd: (c: MyCompany) => void
 // ── Add Competitor Dialog ─────────────────────────────────────────────────────
 
 function AddCompetitorDialog({ onAdd }: { onAdd: (c: Competitor) => void }) {
-  const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [category, setCategory] = useState<Category>("Health Tech");
   const [website, setWebsite] = useState("");
   const [platform, setPlatform] = useState<Platform>("LinkedIn");
   const [handle, setHandle] = useState("");
+  const actionsRef = useRef<{ unmount: () => void; close: () => void } | null>(null);
 
   function handleSubmit() {
     if (!name.trim() || !handle.trim()) return;
@@ -246,11 +246,11 @@ function AddCompetitorDialog({ onAdd }: { onAdd: (c: Competitor) => void }) {
       accounts: [{ platform, handle: handle.startsWith("@") ? handle.trim() : `@${handle.trim()}`, followers: 0, growthPct: 0, engagementRate: 0, postsPerWeek: 0, lastPost: "—", recentPosts: [] }],
     });
     setName(""); setCategory("Health Tech"); setWebsite(""); setPlatform("LinkedIn"); setHandle("");
-    setOpen(false);
+    actionsRef.current?.close();
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog actionsRef={actionsRef}>
       <DialogTrigger className="inline-flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white transition-colors">
         <Plus className="h-4 w-4" />Add Competitor
       </DialogTrigger>
@@ -292,7 +292,7 @@ function AddCompetitorDialog({ onAdd }: { onAdd: (c: Competitor) => void }) {
             </div>
           </div>
           <div className="flex justify-end gap-2 pt-1">
-            <Button variant="outline" size="sm" className="border-gray-700 text-gray-300 hover:bg-gray-800" onClick={() => setOpen(false)}>Cancel</Button>
+            <DialogClose render={<Button variant="outline" size="sm" className="border-gray-700 text-gray-300 hover:bg-gray-800" />}>Cancel</DialogClose>
             <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white border-0" onClick={handleSubmit} disabled={!name.trim() || !handle.trim()}>Add</Button>
           </div>
         </div>
@@ -455,8 +455,8 @@ export default function CompetitorsPage() {
               const isExpanded = expanded.has(c.id);
               const isLastOfCompetitor = i === flatRows.length - 1 || flatRows[i + 1].competitor.id !== c.id;
               return (
-                <>
-                  <tr key={`${c.id}-${a.platform}`} className="hover:bg-gray-800/50 transition-colors cursor-pointer" onClick={() => toggleExpand(c.id)}>
+                <React.Fragment key={`${c.id}-${a.platform}`}>
+                  <tr className="hover:bg-gray-800/50 transition-colors cursor-pointer" onClick={() => toggleExpand(c.id)}>
                     <td className="px-4 py-3">
                       {isLastOfCompetitor && (isExpanded ? <ChevronDownIcon className="h-3.5 w-3.5 text-gray-400" /> : <ChevronRight className="h-3.5 w-3.5 text-gray-400" />)}
                     </td>
@@ -496,11 +496,11 @@ export default function CompetitorsPage() {
                     <td className="px-4 py-3 text-gray-400 text-xs">{a.lastPost}</td>
                   </tr>
                   {isExpanded && isLastOfCompetitor && (
-                    <tr key={`${c.id}-detail`}>
+                    <tr>
                       <td colSpan={9} className="p-0"><CompetitorDetail competitor={c} /></td>
                     </tr>
                   )}
-                </>
+                </React.Fragment>
               );
             })}
             {flatRows.length === 0 && (
