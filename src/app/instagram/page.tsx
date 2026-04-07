@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Instagram, ImagePlus, Heart, MessageCircle, Users } from "lucide-react";
+import { Camera, ImagePlus, Heart, MessageCircle, Users } from "lucide-react";
 
 const accounts = [
   {
@@ -41,7 +41,7 @@ export default function InstagramPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
-        <Instagram className="h-6 w-6 text-pink-400" />
+        <Camera className="h-6 w-6 text-pink-400" />
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Instagram Manager</h2>
           <p className="text-muted-foreground text-sm mt-0.5">

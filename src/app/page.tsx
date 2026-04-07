@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Instagram, BarChart2, CalendarDays, Users, Newspaper } from "lucide-react";
+import { Camera, BarChart2, CalendarDays, Users, Newspaper } from "lucide-react";
 import Link from "next/link";
 
 const sections = [
@@ -8,7 +8,7 @@ const sections = [
     title: "Instagram Manager",
     description: "Manage EmmiTec.Health and PETJourney posts, stories, and engagement across both brand accounts.",
     href: "/instagram",
-    icon: Instagram,
+    icon: Camera,
     status: "Active",
   },
   {

@@ -32,7 +32,7 @@ export default function AnalyticsPage() {
         <div>
           <h2 className="text-2xl font-bold tracking-tight">Analytics</h2>
           <p className="text-muted-foreground text-sm mt-0.5">
-            LinkedIn · Instagram — EmmiTec.Health & PETJourney performance.
+            LinkedIn · Camera — EmmiTec.Health & PETJourney performance.
           </p>
         </div>
         <Badge className="ml-auto" variant="secondary">Coming Soon</Badge>

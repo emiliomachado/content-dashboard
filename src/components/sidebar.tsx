@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Instagram,
+  Camera,
   BarChart2,
   CalendarDays,
   Users,
@@ -23,7 +23,7 @@ const navItems = [
   {
     label: "Instagram Manager",
     href: "/instagram",
-    icon: Instagram,
+    icon: Camera,
   },
   {
     label: "Analytics",
